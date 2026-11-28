@@ -2,8 +2,8 @@
     <div style="position:relative;max-height:460px;overflow:hidden;">
         <img id="dest-main-image" src="{{ $destination->hero_image }}" alt="{{ $destination->name }}" style="width:100%;height:440px;object-fit:cover;">
         <div style="position:absolute;bottom:1.25rem;left:1.25rem;right:1.25rem;display:flex;flex-wrap:wrap;justify-content:space-between;align-items:flex-end;gap:1rem;">
-            <div style="background:rgba(16,43,35,0.85);color:#fff;padding:1rem 1.35rem;border-radius:12px;">
-                <span style="font-size:0.8rem;text-transform:uppercase;letter-spacing:0.08em;color:var(--sn-mountain-blue);">{{ $destination->region }} • {{ $destination->location }}</span>
+            <div style="background:rgba(8,8,8,0.82);color:#fff;padding:1rem 1.35rem;border-radius:8px;">
+                <span style="font-size:0.8rem;text-transform:uppercase;letter-spacing:0.08em;color:#7cb3ff;">{{ $destination->region }} • {{ $destination->location }}</span>
                 <h1 class="sn-h2" style="color:#fff;margin:0.2rem 0 0;">{{ $destination->name }}</h1>
             </div>
             <div class="sn-flex">

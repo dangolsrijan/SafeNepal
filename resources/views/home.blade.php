@@ -8,21 +8,25 @@
 
     @include('components.home.search')
 
+    @include('components.home.intro')
+
     @include('components.home.featured-destinations')
 
     @include('components.home.featured-packages')
 
-    @include('components.home.planner-preview')
+    @include('components.home.services')
 
-    @include('components.home.local-guides')
+    @include('components.home.experiences')
 
-    @include('components.home.trusted-agencies')
+    @include('components.home.why-safenepal')
 
     @include('components.home.safety-preview')
 
-    @include('components.home.how-it-works')
+    @include('components.home.gallery')
 
     @include('components.home.testimonials')
+
+    @include('components.home.faq')
 
     @include('components.home.cta')
 

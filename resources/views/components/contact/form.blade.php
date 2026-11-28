@@ -1,7 +1,5 @@
 <div class="sn-card" style="padding:2rem;">
-    <span class="sn-eyebrow">Get in Touch</span>
-    <h1 class="sn-h2">Contact SafeNepal</h1>
-    <p class="sn-muted sn-mb-3">Questions about partnering as a local Nepali travel agency, destination safety records, or platform support?</p>
+    <h2 class="sn-h3 sn-mb-2">Send Us a Message</h2>
 
     <form method="POST" action="{{ route('contact.submit') }}">
         @csrf
