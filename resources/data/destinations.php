@@ -195,10 +195,10 @@ return [
         'location' => 'Sagarmatha National Park, Solukhumbu',
         'short_description' => 'The roof of the world—suspension bridges, Sherpa monasteries, turquoise Gokyo lakes, and the trail to Everest Base Camp.',
         'description' => 'Home to Mount Everest (Sagarmatha, 8,848.86m), the Khumbu valley pairs awe-inspiring glaciated peaks with deeply rooted Sherpa Buddhist culture in Namche Bazaar and Tengboche Monastery.',
-        'hero_image' => 'https://images.unsplash.com/photo-1516302752625-fcc3c50ae61f?auto=format&fit=crop&w=1400&q=80',
+        'hero_image' => 'https://images.unsplash.com/photo-1486911278844-a81c5267e227?auto=format&fit=crop&w=1400&q=80',
         'gallery' => [
-            'https://images.unsplash.com/photo-1516302752625-fcc3c50ae61f?auto=format&fit=crop&w=1000&q=80',
             'https://images.unsplash.com/photo-1486911278844-a81c5267e227?auto=format&fit=crop&w=1000&q=80',
+            'https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?auto=format&fit=crop&w=1000&q=80',
         ],
         'difficulty' => 'challenging',
         'estimated_duration_days' => 12,

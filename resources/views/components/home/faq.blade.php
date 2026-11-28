@@ -1,54 +1,58 @@
-<section class="sn-section sn-section-white" data-reveal>
+<section class="sn-section sn-section-porcelain" data-reveal>
     <div class="sn-container">
-        <div class="sn-faq-grid">
-            <div>
-                <span class="sn-eyebrow">Frequently Asked Questions</span>
-                <h2 class="sn-h2">Common Questions About Traveling with SafeNepal</h2>
-                <p class="sn-lead" style="margin-bottom:1.5rem;">
-                    Quick answers on how our Smart Trip Planner, verified local guides, and traveler safety tools work across Nepal.
-                </p>
-                <a href="{{ route('contact') }}" class="sn-btn sn-btn-outline">Contact Support</a>
+        <div class="sn-section-center">
+            <span class="av-badge">FAQs</span>
+            <h2 class="sn-h2">Frequently Asked Questions</h2>
+        </div>
+
+        <div class="av-faq-list" data-accordion>
+            <div class="av-faq-card open" data-accordion-item>
+                <button type="button" class="av-faq-trigger" data-accordion-trigger aria-expanded="true">
+                    <span>Do I need to choose a Nepal destination before using the Smart Trip Planner?</span>
+                    <span class="av-faq-icon" aria-hidden="true">+</span>
+                </button>
+                <div class="av-faq-panel">
+                    No. You can leave the destination field on Auto-Match, select your travel interests, budget in NPR, and trip length, and our Jaccard Similarity engine will automatically recommend the best-fitting Nepal region and build a day-by-day itinerary.
+                </div>
             </div>
 
-            <div class="sn-accordion" data-accordion>
-                <div class="sn-accordion-item open" data-accordion-item>
-                    <button type="button" class="sn-accordion-trigger" data-accordion-trigger aria-expanded="true">
-                        <span>How does the Smart Trip Planner create my Nepal itinerary?</span>
-                        <span class="sn-accordion-icon" aria-hidden="true">+</span>
-                    </button>
-                    <div class="sn-accordion-panel">
-                        Select your preferred destination (or let SafeNepal auto-match one), travel interests, budget in NPR, and trip length. Our Jaccard Similarity engine matches destinations and packages to your interests, while our Greedy activity selector builds a balanced day-by-day schedule.
-                    </div>
+            <div class="av-faq-card" data-accordion-item>
+                <button type="button" class="av-faq-trigger" data-accordion-trigger aria-expanded="false">
+                    <span>Can travel packages and itineraries be customized?</span>
+                    <span class="av-faq-icon" aria-hidden="true">+</span>
+                </button>
+                <div class="av-faq-panel">
+                    Yes. You can adjust trip duration, budget, accommodation style, and transportation preferences in the Smart Trip Planner, remove or add daily activities in your itinerary preview, and send custom inquiries directly to verified local agencies and guides.
                 </div>
+            </div>
 
-                <div class="sn-accordion-item" data-accordion-item>
-                    <button type="button" class="sn-accordion-trigger" data-accordion-trigger aria-expanded="false">
-                        <span>Are the guides and travel agencies on SafeNepal verified?</span>
-                        <span class="sn-accordion-icon" aria-hidden="true">+</span>
-                    </button>
-                    <div class="sn-accordion-panel">
-                        Yes. SafeNepal highlights verification status, tourism license references, languages spoken, and traveler reviews so you can confidently choose licensed Nepali mountain guides and local agencies.
-                    </div>
+            <div class="av-faq-card" data-accordion-item>
+                <button type="button" class="av-faq-trigger" data-accordion-trigger aria-expanded="false">
+                    <span>How does SafeNepal support traveler safety in the Himalayas?</span>
+                    <span class="av-faq-icon" aria-hidden="true">+</span>
+                </button>
+                <div class="av-faq-panel">
+                    Every destination includes a risk level (Low, Moderate, or High), altitude awareness notes, and preparation checklists. The Safety Center also provides Nepal emergency contacts, a Help Near Me facility directory, and interactive demo SOS & Safety Check-In tools.
                 </div>
+            </div>
 
-                <div class="sn-accordion-item" data-accordion-item>
-                    <button type="button" class="sn-accordion-trigger" data-accordion-trigger aria-expanded="false">
-                        <span>Are the SOS alerts and weather cards live emergency services?</span>
-                        <span class="sn-accordion-icon" aria-hidden="true">+</span>
-                    </button>
-                    <div class="sn-accordion-panel">
-                        In this frontend prototype, SOS triggers, weather cards, check-in timers, and facility directories are clearly labeled simulated demo features. In any real emergency in Nepal, always dial <strong>100</strong> (Police), <strong>102</strong> (Ambulance), or <strong>1144</strong> (Tourist Police).
-                    </div>
+            <div class="av-faq-card" data-accordion-item>
+                <button type="button" class="av-faq-trigger" data-accordion-trigger aria-expanded="false">
+                    <span>Are SOS alerts, weather cards, and bookings connected to live services?</span>
+                    <span class="av-faq-icon" aria-hidden="true">+</span>
+                </button>
+                <div class="av-faq-panel">
+                    In this frontend prototype, SOS triggers, weather widgets, check-in timers, and package bookings run on clearly labeled demo data. In a real emergency in Nepal, always dial <strong>100</strong> (Police), <strong>102</strong> (Ambulance), or <strong>1144</strong> (Tourist Police).
                 </div>
+            </div>
 
-                <div class="sn-accordion-item" data-accordion-item>
-                    <button type="button" class="sn-accordion-trigger" data-accordion-trigger aria-expanded="false">
-                        <span>Can I customize my itinerary or filter destinations by difficulty and budget?</span>
-                        <span class="sn-accordion-icon" aria-hidden="true">+</span>
-                    </button>
-                    <div class="sn-accordion-panel">
-                        Yes. Both the Destinations and Packages directories support filtering by region, difficulty, budget, and travel style, and the Smart Trip Planner lets you remove or adjust activities in your generated preview.
-                    </div>
+            <div class="av-faq-card" data-accordion-item>
+                <button type="button" class="av-faq-trigger" data-accordion-trigger aria-expanded="false">
+                    <span>How do I connect with a verified local guide or Nepali travel agency?</span>
+                    <span class="av-faq-icon" aria-hidden="true">+</span>
+                </button>
+                <div class="av-faq-panel">
+                    Visit the Guides or Agencies directory to filter by region, language, specialization, or verification status, then view detailed profiles, reviews, and send a direct inquiry.
                 </div>
             </div>
         </div>

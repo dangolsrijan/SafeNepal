@@ -15,4 +15,13 @@ export function initNavigation() {
             dashSidebar.classList.toggle('open');
         });
     }
+
+    const header = document.querySelector('[data-site-header]');
+    if (header && !header.classList.contains('is-scrolled')) {
+        const syncScroll = () => {
+            header.classList.toggle('is-scrolled', window.scrollY > 40);
+        };
+        window.addEventListener('scroll', syncScroll, { passive: true });
+        syncScroll();
+    }
 }

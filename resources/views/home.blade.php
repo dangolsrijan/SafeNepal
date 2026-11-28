@@ -6,8 +6,6 @@
 
     @include('components.home.hero')
 
-    @include('components.home.search')
-
     @include('components.home.intro')
 
     @include('components.home.featured-destinations')
@@ -19,8 +17,6 @@
     @include('components.home.experiences')
 
     @include('components.home.why-safenepal')
-
-    @include('components.home.safety-preview')
 
     @include('components.home.gallery')
 

@@ -14,10 +14,10 @@ return [
         'slug' => 'everest-base-camp-safety-first-trek',
         'short_description' => '12-day guided Khumbu expedition with gradual acclimatization, pulse-oximeter checks, and experienced Sherpa leadership.',
         'description' => 'Experience the iconic journey to Everest Base Camp (5,364m) and Kala Patthar (5,545m) designed around responsible acclimatization. Includes Lukla flights, Sagarmatha permits, cozy teahouses, and daily health monitoring.',
-        'hero_image' => 'https://images.unsplash.com/photo-1516302752625-fcc3c50ae61f?auto=format&fit=crop&w=1200&q=80',
+        'hero_image' => 'https://images.unsplash.com/photo-1486911278844-a81c5267e227?auto=format&fit=crop&w=1200&q=80',
         'gallery' => [
-            'https://images.unsplash.com/photo-1516302752625-fcc3c50ae61f?auto=format&fit=crop&w=1000&q=80',
             'https://images.unsplash.com/photo-1486911278844-a81c5267e227?auto=format&fit=crop&w=1000&q=80',
+            'https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?auto=format&fit=crop&w=1000&q=80',
         ],
         'duration_days' => 12,
         'price_npr' => 115000,
