@@ -4,11 +4,11 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <title>@yield('title', 'Dashboard — SafeNepal')</title>
+    <title>@yield('title', 'Traveler Dashboard — SafeNepal')</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="{{ asset('css/safenepal.css') }}">
+    @vite(['resources/css/app.css', 'resources/js/app.js'])
     @stack('styles')
 </head>
 <body>
@@ -18,7 +18,7 @@
                 <a href="{{ route('home') }}" style="color:#fff;font-family:var(--sn-font-display);font-weight:800;font-size:1.15rem;">
                     SafeNepal
                 </a>
-                <span class="sn-badge sn-badge-blue" style="text-transform:capitalize;">{{ auth()->user()->role }}</span>
+                <span class="sn-badge sn-badge-blue">Demo Traveler</span>
             </div>
 
             <nav class="sn-dash-nav">
@@ -30,7 +30,7 @@
                 <form method="POST" action="{{ route('logout') }}">
                     @csrf
                     <button type="submit" class="sn-dash-link" style="width:100%;background:none;border:none;cursor:pointer;text-align:left;">
-                        Sign Out
+                        Exit Demo Session
                     </button>
                 </form>
             </div>
@@ -45,7 +45,7 @@
 
                 <div class="sn-flex">
                     <a href="{{ route('safety.index') }}" class="sn-btn sn-btn-sm sn-btn-outline">Safety Center</a>
-                    <span class="sn-muted" style="font-weight:600;">{{ auth()->user()->name }}</span>
+                    <a href="{{ route('traveler.profile.index') }}" class="sn-muted" style="font-weight:600;">{{ $demoUser->name }}</a>
                 </div>
             </header>
 
@@ -56,8 +56,8 @@
         </div>
     </div>
 
-    <script src="{{ asset('js/safenepal.js') }}" defer></script>
-    <script src="{{ asset('js/safety.js') }}" defer></script>
+    <div class="sn-toast-container" data-toast-container aria-live="polite" aria-atomic="true"></div>
+
     @stack('scripts')
 </body>
 </html>

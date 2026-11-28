@@ -5,4 +5,5 @@
 <a href="{{ route('traveler.inquiries.index') }}" class="sn-dash-link {{ request()->routeIs('traveler.inquiries.*') ? 'active' : '' }}">Inquiries</a>
 <a href="{{ route('traveler.safety.index') }}" class="sn-dash-link {{ request()->routeIs('traveler.safety.*') ? 'active' : '' }}">Safety, SOS & Check-In</a>
 <a href="{{ route('traveler.reviews.index') }}" class="sn-dash-link {{ request()->routeIs('traveler.reviews.*') ? 'active' : '' }}">My Reviews</a>
+<a href="{{ route('traveler.profile.index') }}" class="sn-dash-link {{ request()->routeIs('traveler.profile.*') ? 'active' : '' }}">Profile</a>
 <a href="{{ route('planner.index') }}" class="sn-dash-link">+ Plan New Trip</a>

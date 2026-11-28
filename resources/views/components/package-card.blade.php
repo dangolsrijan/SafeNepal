@@ -2,7 +2,7 @@
 
 <article class="sn-card sn-card-hover">
     <div class="sn-card-media">
-        <a href="{{ route('packages.show', $package) }}">
+        <a href="{{ route('packages.show', $package->slug) }}">
             <img src="{{ $package->hero_image ?: 'https://images.unsplash.com/photo-1585016495481-91613a3ab1bc?auto=format&fit=crop&w=900&q=80' }}"
                  alt="{{ $package->title }}" loading="lazy">
         </a>
@@ -22,7 +22,7 @@
             @endif
         </div>
         <h3 class="sn-h3" style="margin-bottom:0.35rem;">
-            <a href="{{ route('packages.show', $package) }}">{{ $package->title }}</a>
+            <a href="{{ route('packages.show', $package->slug) }}">{{ $package->title }}</a>
         </h3>
         <p class="sn-muted" style="margin:0 0 0.85rem;flex:1;">{{ \Illuminate\Support\Str::limit($package->short_description, 110) }}</p>
 
@@ -38,17 +38,16 @@
             <div style="font-weight:800;color:var(--sn-forest);font-size:1.05rem;">NPR {{ number_format($package->price_npr) }}</div>
         </div>
         <div class="sn-flex">
-            @auth
-                <form method="POST" action="{{ route('saved-items.toggle') }}">
-                    @csrf
-                    <input type="hidden" name="type" value="package">
-                    <input type="hidden" name="id" value="{{ $package->id }}">
-                    <button type="submit" class="sn-btn sn-btn-outline sn-btn-sm">
-                        {{ auth()->user()->hasSaved(\App\Models\Package::class, $package->id) ? 'Saved ✓' : 'Save' }}
-                    </button>
-                </form>
-            @endauth
-            <a href="{{ route('packages.show', $package) }}" class="sn-btn sn-btn-primary sn-btn-sm">View Details</a>
+            <button type="button"
+                    class="sn-btn sn-btn-outline sn-btn-sm"
+                    data-save-toggle
+                    data-save-key="package:{{ $package->slug }}"
+                    data-save-label="Save"
+                    data-saved-label="Saved ✓"
+                    aria-pressed="false">
+                Save
+            </button>
+            <a href="{{ route('packages.show', $package->slug) }}" class="sn-btn sn-btn-primary sn-btn-sm">View Details</a>
         </div>
     </div>
 </article>

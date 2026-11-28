@@ -1,0 +1,68 @@
+<?php
+
+/**
+ * SafeNepal Frontend Demo Data — Travel Agencies
+ */
+
+return [
+    [
+        'id' => 1,
+        'name' => 'Himalayan Horizon Expeditions',
+        'slug' => 'himalayan-horizon-expeditions',
+        'logo' => 'https://images.unsplash.com/photo-1544735716-392fe2489ffa?auto=format&fit=crop&w=300&q=80',
+        'description' => 'Government-licensed trekking and high-altitude expedition operator based in Thamel with 18 years of safety-first Himalayan guiding.',
+        'location' => 'Thamel, Kathmandu',
+        'phone' => '+977-1-4412345',
+        'email' => 'hello@himalayanhorizon.demo.np',
+        'website' => 'https://himalayanhorizon.demo.np',
+        'license_number' => 'NTB-2048-KTM',
+        'verification_status' => 'verified',
+        'rating_avg' => 4.9,
+        'reviews_count' => 3,
+    ],
+    [
+        'id' => 2,
+        'name' => 'Annapurna Trailcraft Tours',
+        'slug' => 'annapurna-trailcraft-tours',
+        'logo' => 'https://images.unsplash.com/photo-1585016495481-91613a3ab1bc?auto=format&fit=crop&w=300&q=80',
+        'description' => 'Pokhara-based boutique agency specializing in Annapurna, Mustang, and lake-to-peak eco-trekking experiences.',
+        'location' => 'Lakeside, Pokhara',
+        'phone' => '+977-61-462890',
+        'email' => 'info@trailcraft.demo.np',
+        'website' => 'https://trailcraft.demo.np',
+        'license_number' => 'NTB-3109-PKR',
+        'verification_status' => 'verified',
+        'rating_avg' => 4.8,
+        'reviews_count' => 2,
+    ],
+    [
+        'id' => 3,
+        'name' => 'Terai Wildlife & Heritage Journeys',
+        'slug' => 'terai-wildlife-heritage-journeys',
+        'logo' => 'https://images.unsplash.com/photo-1547970810-dc1eac37d174?auto=format&fit=crop&w=300&q=80',
+        'description' => 'Community-led wildlife safaris in Chitwan and spiritual heritage tours across Lumbini and Kathmandu Valley.',
+        'location' => 'Sauraha, Chitwan',
+        'phone' => '+977-56-580211',
+        'email' => 'safari@teraijourneys.demo.np',
+        'website' => 'https://teraijourneys.demo.np',
+        'license_number' => 'NTB-4210-CHT',
+        'verification_status' => 'verified',
+        'rating_avg' => 4.7,
+        'reviews_count' => 2,
+    ],
+    [
+        'id' => 4,
+        'name' => 'Langtang Valley Eco Treks',
+        'slug' => 'langtang-valley-eco-treks',
+        'logo' => 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?auto=format&fit=crop&w=300&q=80',
+        'description' => 'Newly registered eco-friendly trekking collective focused on Langtang and Tamang Heritage trails.',
+        'location' => 'Boudha, Kathmandu',
+        'phone' => '+977-1-4911223',
+        'email' => 'team@langtangeco.demo.np',
+        'website' => 'https://langtangeco.demo.np',
+        'license_number' => 'NTB-PENDING-882',
+        'verification_status' => 'pending',
+        'rating_avg' => 0,
+        'reviews_count' => 0,
+    ],
+];

@@ -14,10 +14,10 @@
         @foreach($reviews as $review)
             <div class="sn-card" style="padding:1.25rem;">
                 <div class="sn-flex-between sn-mb-1">
-                    <strong>{{ $review->reviewable?->title ?? $review->reviewable?->name ?? 'Reviewed Item' }}</strong>
+                    <strong>{{ $review->target_name ?? 'Reviewed Item' }}</strong>
                     <span style="font-weight:800;color:var(--sn-forest);">★ {{ $review->rating }}/5</span>
                 </div>
-                @if($review->title) <h4 style="margin:0.2rem 0;">{{ $review->title }}</h4> @endif
+                @if(!empty($review->title)) <h4 style="margin:0.2rem 0;">{{ $review->title }}</h4> @endif
                 <p class="sn-muted" style="margin:0;">{{ $review->comment }}</p>
             </div>
         @endforeach

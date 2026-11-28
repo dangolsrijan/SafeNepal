@@ -20,14 +20,14 @@
                     <span class="sn-badge sn-badge-blue">{{ $trip->match_score }}% Match</span>
                     <x-status-badge :status="$trip->status" />
                 </div>
-                <h3 class="sn-h3"><a href="{{ route('traveler.trips.show', $trip) }}">{{ $trip->title }}</a></h3>
+                <h3 class="sn-h3"><a href="{{ route('traveler.trips.show', $trip->slug) }}">{{ $trip->title }}</a></h3>
                 <p class="sn-muted" style="font-size:0.88rem;margin:0 0 0.85rem;">
                     {{ $trip->destination?->name }} • {{ $trip->duration_days }} Days • {{ $trip->travelers_count }} Traveler(s)
-                    @if($trip->start_date) • Starts {{ $trip->start_date->format('M d, Y') }} @endif
+                    @if($trip->start_date) • Starts {{ $trip->start_date }} @endif
                 </p>
                 <div class="sn-flex-between" style="font-size:0.86rem;">
                     <span>Est: <strong>NPR {{ number_format($trip->estimated_total_npr) }}</strong> / Budget: NPR {{ number_format($trip->budget_npr) }}</span>
-                    <a href="{{ route('traveler.trips.show', $trip) }}" class="sn-btn sn-btn-primary sn-btn-sm">Edit Itinerary</a>
+                    <a href="{{ route('traveler.trips.show', $trip->slug) }}" class="sn-btn sn-btn-primary sn-btn-sm">Edit Itinerary</a>
                 </div>
             </div>
         @endforeach

@@ -2,39 +2,29 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Destination;
-use App\Models\EmergencyContact;
-use App\Models\NearbyService;
-use App\Models\SafetyAlert;
-use App\Services\SafetyService;
+use App\Services\FrontendDataService;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
 
 class SafetyCenterController extends Controller
 {
-    public function __construct(public SafetyService $safetyService) {}
+    public function __construct(public FrontendDataService $data) {}
 
     public function index(Request $request): View
     {
         $riskFilter = $request->input('risk_level');
 
-        $destinations = Destination::with('safetyInformation')
-            ->when($riskFilter, function ($q) use ($riskFilter): void {
-                $q->whereHas('safetyInformation', fn ($sq) => $sq->where('risk_level', $riskFilter));
-            })
-            ->orderBy('name')
-            ->get();
+        $destinations = $this->data->destinations()
+            ->when($riskFilter, fn ($collection) => $collection->filter(
+                fn ($d): bool => ($d->safetyInformation?->risk_level ?? '') === $riskFilter
+            ))
+            ->sortBy('name')
+            ->values();
 
-        $alerts = SafetyAlert::with('destination')
-            ->where('is_active', true)
-            ->latest()
-            ->get();
+        $alerts = $this->data->safetyAlerts();
+        $emergencyContacts = $this->data->emergencyContacts();
 
-        $emergencyContacts = EmergencyContact::whereNull('user_id')
-            ->orderBy('category')
-            ->get();
-
-        return view('safety.index', compact('destinations', 'alerts', 'emergencyContacts', 'riskFilter'));
+        return view('safety', compact('destinations', 'alerts', 'emergencyContacts', 'riskFilter'));
     }
 
     public function helpNearMe(Request $request): View
@@ -44,9 +34,9 @@ class SafetyCenterController extends Controller
         $category = $request->input('category');
         $region = $request->input('region');
 
-        $services = $this->safetyService->findNearbyServices($lat, $lng, $category, $region);
-        $regions = NearbyService::query()->distinct()->orderBy('region')->pluck('region');
+        $services = $this->data->findNearbyServices($lat, $lng, $category, $region);
+        $regions = $this->data->emergencyServiceRegions();
 
-        return view('safety.help-near-me', compact('services', 'regions', 'lat', 'lng', 'category', 'region'));
+        return view('help-near-me', compact('services', 'regions', 'lat', 'lng', 'category', 'region'));
     }
 }

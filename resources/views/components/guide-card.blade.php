@@ -8,7 +8,7 @@
                  style="width:64px;height:64px;border-radius:50%;object-fit:cover;flex-shrink:0;" loading="lazy">
             <div>
                 <h3 class="sn-h3" style="margin-bottom:0.15rem;font-size:1.08rem;">
-                    <a href="{{ route('guides.show', $guide) }}">{{ $guide->name }}</a>
+                    <a href="{{ route('guides.show', $guide->slug) }}">{{ $guide->name }}</a>
                 </h3>
                 <div class="sn-muted" style="font-size:0.84rem;">{{ $guide->location }} • {{ $guide->experience_years }} yrs exp</div>
                 <div class="sn-flex sn-mt-1" style="gap:0.4rem;">
@@ -34,6 +34,6 @@
 
     <div class="sn-card-footer">
         <span style="font-weight:700;color:var(--sn-forest);font-size:0.9rem;">NPR {{ number_format($guide->daily_rate_npr) }}/day</span>
-        <a href="{{ route('guides.show', $guide) }}" class="sn-btn sn-btn-primary sn-btn-sm">View Profile</a>
+        <a href="{{ route('guides.show', $guide->slug) }}" class="sn-btn sn-btn-primary sn-btn-sm">View Profile</a>
     </div>
 </article>

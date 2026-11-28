@@ -2,7 +2,7 @@
 
 <article class="sn-card sn-card-hover">
     <div class="sn-card-media">
-        <a href="{{ route('destinations.show', $destination) }}">
+        <a href="{{ route('destinations.show', $destination->slug) }}">
             <img src="{{ $destination->hero_image ?: 'https://images.unsplash.com/photo-1544735716-392fe2489ffa?auto=format&fit=crop&w=900&q=80' }}"
                  alt="{{ $destination->name }}" loading="lazy">
         </a>
@@ -24,7 +24,7 @@
             @endif
         </div>
         <h3 class="sn-h3" style="margin-bottom:0.35rem;">
-            <a href="{{ route('destinations.show', $destination) }}">{{ $destination->name }}</a>
+            <a href="{{ route('destinations.show', $destination->slug) }}">{{ $destination->name }}</a>
         </h3>
         <p class="sn-muted" style="margin:0 0 1rem;flex:1;">{{ \Illuminate\Support\Str::limit($destination->short_description, 115) }}</p>
 
@@ -36,16 +36,15 @@
     </div>
 
     <div class="sn-card-footer">
-        <a href="{{ route('destinations.show', $destination) }}" class="sn-btn sn-btn-primary sn-btn-sm">View Details</a>
-        @auth
-            <form method="POST" action="{{ route('saved-items.toggle') }}">
-                @csrf
-                <input type="hidden" name="type" value="destination">
-                <input type="hidden" name="id" value="{{ $destination->id }}">
-                <button type="submit" class="sn-btn sn-btn-outline sn-btn-sm">
-                    {{ auth()->user()->hasSaved(\App\Models\Destination::class, $destination->id) ? 'Saved ✓' : 'Save' }}
-                </button>
-            </form>
-        @endauth
+        <a href="{{ route('destinations.show', $destination->slug) }}" class="sn-btn sn-btn-primary sn-btn-sm">View Details</a>
+        <button type="button"
+                class="sn-btn sn-btn-outline sn-btn-sm"
+                data-save-toggle
+                data-save-key="destination:{{ $destination->slug }}"
+                data-save-label="Save"
+                data-saved-label="Saved ✓"
+                aria-pressed="false">
+            Save
+        </button>
     </div>
 </article>

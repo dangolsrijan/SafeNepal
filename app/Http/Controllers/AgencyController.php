@@ -2,52 +2,48 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\AgencyProfile;
-use App\Models\Destination;
+use App\Services\FrontendDataService;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
 
 class AgencyController extends Controller
 {
+    public function __construct(public FrontendDataService $data) {}
+
     public function index(Request $request): View
     {
-        $query = AgencyProfile::withCount(['packages' => fn ($q) => $q->where('is_published', true)->where('approval_status', 'approved')])
-            ->where('verification_status', '!=', 'suspended');
+        $items = $this->data->agencies();
 
-        if ($search = trim((string) $request->input('q'))) {
-            $query->where(function ($q) use ($search): void {
-                $q->where('name', 'like', "%{$search}%")
-                    ->orWhere('description', 'like', "%{$search}%")
-                    ->orWhere('location', 'like', "%{$search}%");
-            });
+        if ($search = strtolower(trim((string) $request->input('q')))) {
+            $items = $items->filter(fn ($a): bool => str_contains(strtolower($a->name), $search)
+                || str_contains(strtolower($a->description), $search)
+                || str_contains(strtolower($a->location), $search));
         }
 
-        if ($location = trim((string) $request->input('location'))) {
-            $query->where('location', 'like', "%{$location}%");
+        if ($location = strtolower(trim((string) $request->input('location')))) {
+            $items = $items->filter(fn ($a): bool => str_contains(strtolower($a->location), $location));
         }
 
         if ($request->boolean('verified_only')) {
-            $query->where('verification_status', 'verified');
+            $items = $items->where('verification_status', 'verified');
         }
 
-        $agencies = $query->orderByRaw("CASE WHEN verification_status = 'verified' THEN 0 ELSE 1 END")
-            ->orderByDesc('rating_avg')
-            ->paginate(9)
-            ->withQueryString();
+        $items = $items->sortByDesc('rating_avg')
+            ->sortBy(fn ($a): int => $a->verification_status === 'verified' ? 0 : 1)
+            ->values();
 
-        return view('agencies.index', compact('agencies'));
+        $agencies = $this->data->paginate($items, 9);
+
+        return view('agencies', compact('agencies'));
     }
 
-    public function show(AgencyProfile $agency): View
+    public function show(string $slug): View
     {
-        $agency->load([
-            'packages' => fn ($q) => $q->where('is_published', true)->where('approval_status', 'approved')->with('destination'),
-            'guides',
-            'reviews' => fn ($q) => $q->where('is_approved', true)->with('user')->latest(),
-        ]);
+        $agency = $this->data->findAgency($slug);
+        abort_if(! $agency, 404);
 
-        $destinations = Destination::orderBy('name')->get(['id', 'name']);
+        $destinations = $this->data->destinations()->sortBy('name')->values();
 
-        return view('agencies.show', compact('agency', 'destinations'));
+        return view('agency-detail', compact('agency', 'destinations'));
     }
 }

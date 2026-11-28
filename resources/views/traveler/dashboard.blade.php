@@ -7,8 +7,8 @@
 @section('content')
 <div class="sn-flex-between sn-mb-3">
     <div>
-        <h2 class="sn-h2" style="margin-bottom:0.2rem;">Namaste, {{ auth()->user()->name }}</h2>
-        <p class="sn-muted" style="margin:0;">Manage your Nepal trips, bookings, saved destinations, and active safety tools.</p>
+        <h2 class="sn-h2" style="margin-bottom:0.2rem;">Namaste, {{ $demoUser->name }}</h2>
+        <p class="sn-muted" style="margin:0;">Preview your Nepal trips, demo bookings, saved destinations, and interactive safety tools.</p>
     </div>
     <div class="sn-flex-wrap">
         <a href="{{ route('planner.index') }}" class="sn-btn sn-btn-primary sn-btn-sm">Plan New Trip</a>
@@ -32,7 +32,7 @@
         @forelse($upcomingTrips as $trip)
             <div style="padding:0.85rem 0;border-bottom:1px solid var(--sn-border);">
                 <div class="sn-flex-between">
-                    <strong><a href="{{ route('traveler.trips.show', $trip) }}">{{ $trip->title }}</a></strong>
+                    <strong><a href="{{ route('traveler.trips.show', $trip->slug) }}">{{ $trip->title }}</a></strong>
                     <x-status-badge :status="$trip->status" />
                 </div>
                 <div class="sn-muted" style="font-size:0.84rem;">
@@ -56,7 +56,7 @@
                     <x-status-badge :status="$booking->booking_status" />
                 </div>
                 <div class="sn-muted" style="font-size:0.84rem;">
-                    {{ $booking->booking_code }} • {{ $booking->travel_date->format('M d, Y') }} • NPR {{ number_format($booking->total_price_npr) }}
+                    {{ $booking->booking_code }} • {{ $booking->travel_date_label }} • NPR {{ number_format($booking->total_price_npr) }}
                 </div>
             </div>
         @empty

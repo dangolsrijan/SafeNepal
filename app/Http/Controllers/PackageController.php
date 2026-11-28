@@ -2,81 +2,72 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\AgencyProfile;
-use App\Models\Destination;
-use App\Models\Package;
+use App\Services\FrontendDataService;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
 
 class PackageController extends Controller
 {
+    public function __construct(public FrontendDataService $data) {}
+
     public function index(Request $request): View
     {
-        $query = Package::with(['destination', 'agency', 'guide'])
-            ->where('is_published', true)
-            ->where('approval_status', 'approved');
+        $items = $this->data->packages();
 
-        if ($search = trim((string) $request->input('q'))) {
-            $query->where(function ($q) use ($search): void {
-                $q->where('title', 'like', "%{$search}%")
-                    ->orWhere('short_description', 'like', "%{$search}%");
-            });
+        if ($search = strtolower(trim((string) $request->input('q')))) {
+            $items = $items->filter(fn ($p): bool => str_contains(strtolower($p->title), $search)
+                || str_contains(strtolower($p->short_description), $search)
+                || str_contains(strtolower((string) ($p->destination?->name ?? '')), $search));
         }
 
-        if ($destinationId = $request->input('destination')) {
-            $query->where('destination_id', (int) $destinationId);
+        if ($destinationSlug = $request->input('destination')) {
+            $items = $items->where('destination_slug', $destinationSlug);
         }
 
-        if ($agencyId = $request->input('agency')) {
-            $query->where('agency_id', (int) $agencyId);
+        if ($agencySlug = $request->input('agency')) {
+            $items = $items->where('agency_slug', $agencySlug);
         }
 
         if ($difficulty = $request->input('difficulty')) {
-            $query->where('difficulty', $difficulty);
+            $items = $items->where('difficulty', $difficulty);
         }
 
         if ($type = $request->input('package_type')) {
-            $query->where('package_type', $type);
+            $items = $items->where('package_type', $type);
         }
 
         if ($maxPrice = $request->input('max_price')) {
-            $query->where('price_npr', '<=', (int) $maxPrice);
+            $items = $items->filter(fn ($p): bool => (int) $p->price_npr <= (int) $maxPrice);
         }
 
         if ($maxDuration = $request->input('max_duration')) {
-            $query->where('duration_days', '<=', (int) $maxDuration);
+            $items = $items->filter(fn ($p): bool => (int) $p->duration_days <= (int) $maxDuration);
         }
 
         if ($minRating = $request->input('min_rating')) {
-            $query->where('rating_avg', '>=', (float) $minRating);
+            $items = $items->filter(fn ($p): bool => (float) $p->rating_avg >= (float) $minRating);
         }
 
-        match ($request->input('sort', 'featured')) {
-            'price_asc' => $query->orderBy('price_npr'),
-            'price_desc' => $query->orderByDesc('price_npr'),
-            'duration_asc' => $query->orderBy('duration_days'),
-            'rating' => $query->orderByDesc('rating_avg'),
-            default => $query->orderByDesc('is_featured')->orderByDesc('rating_avg'),
+        $items = match ($request->input('sort', 'featured')) {
+            'price_asc' => $items->sortBy('price_npr'),
+            'price_desc' => $items->sortByDesc('price_npr'),
+            'duration_asc' => $items->sortBy('duration_days'),
+            'rating' => $items->sortByDesc('rating_avg'),
+            default => $items->sortByDesc('rating_avg')->sortByDesc('is_featured'),
         };
 
-        $packages = $query->paginate(9)->withQueryString();
-        $destinations = Destination::orderBy('name')->get(['id', 'name']);
-        $agencies = AgencyProfile::where('verification_status', 'verified')->orderBy('name')->get(['id', 'name']);
+        $packages = $this->data->paginate($items->values(), 9);
+        $destinations = $this->data->destinations()->sortBy('name')->values();
+        $agencies = $this->data->agencies()->where('verification_status', 'verified')->sortBy('name')->values();
 
-        return view('packages.index', compact('packages', 'destinations', 'agencies'));
+        return view('packages', compact('packages', 'destinations', 'agencies'));
     }
 
-    public function show(Package $package): View
+    public function show(string $slug): View
     {
-        abort_unless($package->is_published && $package->approval_status === 'approved', 404);
+        $package = $this->data->findPackage($slug);
+        abort_if(! $package, 404);
 
-        $package->load([
-            'destination.safetyInformation',
-            'agency',
-            'guide',
-            'reviews' => fn ($q) => $q->where('is_approved', true)->with('user')->latest(),
-        ]);
-
-        return view('packages.show', compact('package'));
+        return view('package-detail', compact('package'));
     }
 }

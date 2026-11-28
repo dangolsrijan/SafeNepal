@@ -2,56 +2,54 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Destination;
-use App\Models\GuideProfile;
+use App\Services\FrontendDataService;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
 
 class GuideController extends Controller
 {
+    public function __construct(public FrontendDataService $data) {}
+
     public function index(Request $request): View
     {
-        $query = GuideProfile::with('agency')->where('verification_status', '!=', 'suspended');
+        $items = $this->data->guides();
 
-        if ($search = trim((string) $request->input('q'))) {
-            $query->where(function ($q) use ($search): void {
-                $q->where('name', 'like', "%{$search}%")
-                    ->orWhere('bio', 'like', "%{$search}%")
-                    ->orWhere('location', 'like', "%{$search}%");
-            });
+        if ($search = strtolower(trim((string) $request->input('q')))) {
+            $items = $items->filter(fn ($g): bool => str_contains(strtolower($g->name), $search)
+                || str_contains(strtolower($g->bio), $search)
+                || str_contains(strtolower($g->location), $search));
         }
 
-        if ($location = trim((string) $request->input('location'))) {
-            $query->where('location', 'like', "%{$location}%");
+        if ($location = strtolower(trim((string) $request->input('location')))) {
+            $items = $items->filter(fn ($g): bool => str_contains(strtolower($g->location), $location));
         }
 
-        if ($specialization = trim((string) $request->input('specialization'))) {
-            $query->where('specializations', 'like', "%{$specialization}%");
+        if ($specialization = strtolower(trim((string) $request->input('specialization')))) {
+            $items = $items->filter(fn ($g): bool => collect($g->specializations ?? [])
+                ->contains(fn ($s): bool => str_contains(strtolower($s), $specialization)));
         }
 
-        if ($language = trim((string) $request->input('language'))) {
-            $query->where('languages', 'like', "%{$language}%");
+        if ($language = strtolower(trim((string) $request->input('language')))) {
+            $items = $items->filter(fn ($g): bool => collect($g->languages ?? [])
+                ->contains(fn ($l): bool => str_contains(strtolower($l), $language)));
         }
 
         if ($minRating = $request->input('min_rating')) {
-            $query->where('rating_avg', '>=', (float) $minRating);
+            $items = $items->filter(fn ($g): bool => (float) $g->rating_avg >= (float) $minRating);
         }
 
-        $guides = $query->orderByDesc('rating_avg')->paginate(9)->withQueryString();
+        $guides = $this->data->paginate($items->sortByDesc('rating_avg')->values(), 9);
 
-        return view('guides.index', compact('guides'));
+        return view('guides', compact('guides'));
     }
 
-    public function show(GuideProfile $guide): View
+    public function show(string $slug): View
     {
-        $guide->load([
-            'agency',
-            'packages' => fn ($q) => $q->where('is_published', true)->where('approval_status', 'approved'),
-            'reviews' => fn ($q) => $q->where('is_approved', true)->with('user')->latest(),
-        ]);
+        $guide = $this->data->findGuide($slug);
+        abort_if(! $guide, 404);
 
-        $destinations = Destination::orderBy('name')->get(['id', 'name']);
+        $destinations = $this->data->destinations()->sortBy('name')->values();
 
-        return view('guides.show', compact('guide', 'destinations'));
+        return view('guide-detail', compact('guide', 'destinations'));
     }
 }

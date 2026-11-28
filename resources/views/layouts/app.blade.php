@@ -4,15 +4,16 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="{{ csrf_token() }}">
+    <meta name="description" content="@yield('meta_description', 'SafeNepal — Discover Nepal destinations, verified local guides and agencies, smart trip planning, and traveler safety tools.')">
     <title>@yield('title', 'SafeNepal — Smart Tourism Safety & Guide Platform')</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="{{ asset('css/safenepal.css') }}">
+    @vite(['resources/css/app.css', 'resources/js/app.js'])
     @stack('styles')
 </head>
 <body>
-    <x-header />
+    @include('partials.header')
 
     <main>
         @if(session('success') || session('error') || session('warning'))
@@ -24,10 +25,10 @@
         @yield('content')
     </main>
 
-    <x-footer />
+    <div class="sn-toast-container" data-toast-container aria-live="polite" aria-atomic="true"></div>
 
-    <script src="{{ asset('js/safenepal.js') }}" defer></script>
-    <script src="{{ asset('js/safety.js') }}" defer></script>
+    @include('partials.footer')
+
     @stack('scripts')
 </body>
 </html>
